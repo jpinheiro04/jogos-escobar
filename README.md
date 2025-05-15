@@ -1,1 +1,1 @@
-# jogos-escobar
+#Jogos P1 Escobar. Alguns jogos que fui vendo videos para fazer e melhorar algumas mecanicas que acho interessante por sua vez isso é uma coletânia de jogos ruins que estou usando para treinar codar em JS, HTML e CSS
