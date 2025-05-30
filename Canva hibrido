@@ -1,0 +1,53 @@
+Exemplo híbrido: <div> com background-image + <canvas> oculto
+html
+Copiar
+Editar
+<style>
+  #minhaDiv {
+    width: 500px;
+    height: 300px;
+    background-image: url('sua-imagem.jpg');
+    background-size: cover;
+    cursor: crosshair;
+  }
+  #canvas {
+    display: none;
+  }
+</style>
+
+<div id="minhaDiv"></div>
+<canvas id="canvas"></canvas>
+<p id="resultado">Clique na imagem para ver a cor.</p>
+
+<script>
+  const div = document.getElementById('minhaDiv');
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  const output = document.getElementById('resultado');
+
+  const img = new Image();
+  img.src = 'sua-imagem.jpg';
+  img.crossOrigin = "anonymous"; // necessário se a imagem estiver em outro domínio
+  img.onload = () => {
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+  };
+
+  div.addEventListener('click', function (e) {
+    const rect = div.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const scaleX = img.width / rect.width;
+    const scaleY = img.height / rect.height;
+    const realX = Math.floor(x * scaleX);
+    const realY = Math.floor(y * scaleY);
+
+    const pixel = ctx.getImageData(realX, realY, 1, 1).data;
+    const rgba = `rgba(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, ${(pixel[3] / 255).toFixed(2)})`;
+
+    output.textContent = `Cor: ${rgba}`;
+    output.style.color = rgba;
+  });
+</script>
