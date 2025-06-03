@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pokémon Red</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .personagem-batalha {
+      position: absolute;
+      top: 300px;
+      width: 400px;
+      display: none;
+    }
+    #imgEsquerda { left: 100px; }
+    #imgDireita { right: 100px; }
+  </style>
+</head>
+<body>
+
+<div id="mapa">
+  <div id="mensagemMissao" class="mensagem">
+  Vá até o ginásio e derrote o Líder.
+</div>
+
+  <img id="cenario" src="imagens/pewter.png">
+  <img id="redcima" src="imagens/cima.png">
+  <img id="redesquerda" src="imagens/esquerda.png">
+  <img id="reddireita" src="imagens/direita.png">
+  <img id="redbaixo" src="imagens/baixo.png">
+  <img id="seta" src="imagens/seta.png" class="oculto">
+  <img id="setaGinasio" src="imagens/setaCima.png">
+</div>
+
+<canvas id="canvas" style="display:none;"></canvas>
+
+<div id="audio">
+  <audio id="sommapa" src="sons/mapa.mp3"></audio>
+  <audio id="somAtaque" src="sons/imbroxavel.mp3"></audio>
+  <audio id="sombatalha" src="sons/batalha.mp3"></audio>
+</div>
+
+<div id="batalha" class="oculto">
+  <h2>Batalha Política!</h2>
+  <div id="nomeAliado" class="nomePersonagemBatalha">Bolsonaro</div>
+  <div id="nomeInimigo" class="nomePersonagemBatalha">Lula</div>
+  <img id="imgEsquerda" src="imagens/bolsonaro.png" class="personagem-batalha">
+  <img id="imgDireita" src="imagens/lula.png" class="personagem-batalha">
+  <progress id="hpAliado" class="oculto" value="20" max="20"></progress>
+  <progress id="hpInimigo" value="20" max="20"></progress>
+  <br><br>
+  <button onclick="ataque('tackle')">Atirar</button>
+  <button onclick="ataque('growl')">imbroxavel</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

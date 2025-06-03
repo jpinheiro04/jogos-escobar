@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Mapa de colisão</title>
+</head>
+<body>
+
+<input type="file" id="inputFile" />
+<script>
+const TILE_SIZE = 32;
+
+document.getElementById('inputFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const img = new Image();
+  img.onload = () => processImage(img);
+  img.src = URL.createObjectURL(file);
+});
+
+function processImage(img) {
+  const cols = Math.floor(img.width / TILE_SIZE);
+  const rows = Math.floor(img.height / TILE_SIZE);
+
+  // Criar canvas para pegar dados da imagem
+  const canvas = document.createElement('canvas');
+  canvas.width = img.width;
+  canvas.height = img.height;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+
+  const matriz = [];
+
+  for (let y = 0; y < rows; y++) {
+    const linha = [];
+    for (let x = 0; x < cols; x++) {
+      // Pegar pixels do bloco
+      const imgData = ctx.getImageData(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+      let somaBranco = 0;
+      for (let i = 0; i < imgData.data.length; i += 4) {
+        // imgData.data = [r,g,b,a,...]
+        const r = imgData.data[i];
+        const g = imgData.data[i + 1];
+        const b = imgData.data[i + 2];
+
+        // Checa se pixel é "branco" (pode ajustar o limite se quiser)
+        if (r > 200 && g > 200 && b > 200) somaBranco++;
+      }
+      // Se mais da metade do bloco é branco, marca 1, senão 0
+      linha.push(somaBranco > (TILE_SIZE * TILE_SIZE) / 2 ? 1 : 0);
+    }
+    matriz.push(linha);
+  }
+
+  // Imprime matriz limpa linha a linha
+  matriz.forEach(linha => console.log(linha));
+}
+</script>
+
+</body>
+</html>
